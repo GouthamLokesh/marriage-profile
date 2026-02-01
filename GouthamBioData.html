@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Marriage Profile – Goutham Lokesh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --grad1:#6a11cb;
+  --grad2:#2575fc;
+  --grad3:#00f2fe;
+  --bg:#0b1020;
+  --card:rgba(255,255,255,0.08);
+  --border:rgba(255,255,255,0.18);
+  --text:#ffffff;
+  --muted:#cbd5f5;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  background:
+    radial-gradient(circle at top left, #1a1f3c, transparent 40%),
+    radial-gradient(circle at bottom right, #0b3b5a, transparent 40%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* ---------- animated gradient background bar ---------- */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:22px;
+  padding:36px 28px;
+  margin-bottom:28px;
+  background:linear-gradient(120deg,var(--grad1),var(--grad2),var(--grad3));
+  background-size:300% 300%;
+  animation:gradientMove 12s ease infinite;
+  box-shadow:0 20px 50px rgba(0,0,0,.45);
+}
+
+@keyframes gradientMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.25), transparent 35%),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,.18), transparent 40%);
+  pointer-events:none;
+}
+
+/* ---------- layout ---------- */
+
+.wrapper{
+  max-width:920px;
+  margin:36px auto;
+  padding:0 16px 40px;
+}
+
+/* ---------- header ---------- */
+
+.header{
+  display:flex;
+  gap:26px;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+
+.photo{
+  width:130px;
+  height:130px;
+  border-radius:18px;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,.6);
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  animation:float 6s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+
+.header h1{
+  margin:0;
+  font-size:30px;
+  letter-spacing:.4px;
+}
+
+.header .sub{
+  color:#eef2ff;
+  margin-top:4px;
+}
+
+/* ---------- glass cards ---------- */
+
+.card{
+  position:relative;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px 24px;
+  margin-top:20px;
+  backdrop-filter: blur(14px);
+  box-shadow:0 12px 40px rgba(0,0,0,.35);
+  transform:translateY(18px);
+  opacity:0;
+  transition:all .6s cubic-bezier(.2,.6,.2,1);
+}
+
+.card.show{
+  transform:none;
+  opacity:1;
+}
+
+.card:hover{
+  transform:translateY(-6px) scale(1.01);
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:4px;
+  border-radius:18px 0 0 18px;
+  background:linear-gradient(var(--grad1),var(--grad2),var(--grad3));
+}
+
+/* ---------- titles ---------- */
+
+h2{
+  margin:0 0 12px;
+  font-size:18px;
+  letter-spacing:.5px;
+}
+
+/* ---------- grids ---------- */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:10px 20px;
+}
+
+.field{
+  font-size:14.5px;
+  line-height:1.5;
+}
+
+.field span{
+  color:var(--muted);
+}
+
+/* ---------- badges ---------- */
+
+.badge{
+  display:inline-block;
+  padding:6px 12px;
+  margin:6px 6px 0 0;
+  border-radius:999px;
+  font-size:12px;
+  border:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.05));
+}
+
+/* ---------- buttons ---------- */
+
+.button{
+  margin-top:10px;
+  border:none;
+  padding:10px 16px;
+  border-radius:999px;
+  font-size:14px;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(135deg,var(--grad2),var(--grad3));
+  box-shadow:0 6px 20px rgba(37,117,252,.5);
+  transition:transform .2s,box-shadow .2s;
+}
+
+.button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(37,117,252,.7);
+}
+
+/* ---------- contact ---------- */
+
+.contact{
+  display:none;
+  margin-top:12px;
+  padding:14px;
+  border-radius:12px;
+  border:1px dashed var(--border);
+  background:rgba(0,0,0,.25);
+}
+
+/* ---------- footer ---------- */
+
+.footer{
+  text-align:center;
+  color:#c7d2fe;
+  margin-top:36px;
+  font-size:13px;
+}
+
+/* ---------- responsive ---------- */
+
+@media(max-width:600px){
+  .header{
+    flex-direction:column;
+    text-align:center;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <div class="hero">
+    <div class="header">
+      <img src="photo.jpg" class="photo" alt="Goutham Lokesh">
+      <div>
+        <h1>Goutham Lokesh</h1>
+        <div class="sub">Senior Software Test Engineer</div>
+        <div class="sub">Mysore, India</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Basic Information</h2>
+    <div class="grid">
+      <div class="field"><span>Age</span><br>29</div>
+      <div class="field"><span>Height</span><br>5.9</div>
+      <div class="field"><span>Marital Status</span><br>Never Married</div>
+      <div class="field"><span>Location</span><br>Mysore</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Professional Details</h2>
+    <div class="grid">
+      <div class="field"><span>Company</span><br>Unilog</div>
+      <div class="field"><span>Experience</span><br>5+ years</div>
+      <div class="field"><span>Role</span><br>Senior Software Test Engineer</div>
+      <div class="field"><span>Specialization</span><br>Manual, Automation & API Testing</div>
+    </div>
+
+    <div>
+      <span class="badge">Manual QA</span>
+      <span class="badge">Automation</span>
+      <span class="badge">API Testing</span>
+      <span class="badge">Agile</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Education</h2>
+    Bachelor’s Degree in Engineering.
+  </div>
+
+  <div class="card">
+    <h2>About Me</h2>
+    I am a responsible and family-oriented professional working as a Senior Software Test Engineer at Unilog.
+    I value honesty, mutual respect and continuous improvement, and I enjoy problem-solving and automation work.
+  </div>
+
+  <div class="card">
+    <h2>Family Background</h2>
+    I come from a well-educated and supportive family. More details can be shared personally.
+  </div>
+
+  <div class="card">
+    <h2>Partner Preference</h2>
+    I am looking for a kind, understanding and supportive partner with good family values and a positive outlook.
+  </div>
+
+  <div class="card">
+    <h2>Contact</h2>
+    <button class="button" onclick="toggleContact()">Show contact details</button>
+
+    <div class="contact" id="contact">
+      Phone and email can be shared personally after mutual interest.
+    </div>
+  </div>
+
+  <div class="footer">
+    © <span id="year"></span> Goutham Lokesh
+  </div>
+
+</div>
+
+<script>
+/* reveal on scroll */
+const cards = document.querySelectorAll('.card');
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('show');
+    }
+  });
+},{threshold:0.15});
+
+cards.forEach(c=>observer.observe(c));
+
+function toggleContact(){
+  const el = document.getElementById("contact");
+  el.style.display = el.style.display === "block" ? "none" : "block";
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
