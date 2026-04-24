@@ -2,353 +2,819 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Marriage Profile – Goutham Lokesh</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<meta name="description" content="Marriage profile of Goutham Lokesh, Senior Software Test Engineer from Mysore.">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goutham L – Marriage Biodata</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --bg:#0b1020;
-  --card:rgba(255,255,255,.08);
-  --border:rgba(255,255,255,.18);
-  --text:#f8fafc;
-  --muted:#c7d2fe;
-  --g1:#7c3aed;
-  --g2:#2563eb;
-  --g3:#06b6d4;
+  --g1:#D4AF37;--g2:#F0D060;--g3:#B8960C;--g4:#FFE87C;
+  --r1:#8B1A1A;--r2:#C0392B;--r3:#5C0A0A;
+  --bg0:#060202;--bg1:#0E0404;--bg2:#160805;--bg3:#1E0C06;
+  --txt1:#FFF0C8;--txt2:#E8D090;--txt3:#C8A850;--txt4:#A08030;
 }
 
-body.light{
-  --bg:#f5f7fb;
-  --card:#ffffff;
-  --border:#e5e7eb;
-  --text:#0f172a;
-  --muted:#475569;
+html{scroll-behavior:smooth;}
+body{background:var(--bg0);font-family:'Raleway',sans-serif;overflow-x:hidden;min-height:100vh;}
+
+/* ─── LOADER ─── */
+#loader{
+  position:fixed;inset:0;background:var(--bg0);z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 1s ease 0.3s,visibility 1s ease 0.3s;
+}
+#loader.out{opacity:0;visibility:hidden;}
+
+.ld-ring{position:relative;width:180px;height:180px;}
+.ld-ring svg{position:absolute;inset:0;}
+.ld-ring svg.r1{animation:spin 3s linear infinite;}
+.ld-ring svg.r2{animation:spin 2s linear infinite reverse;}
+.ld-ring svg.r3{animation:spin 4s linear infinite;}
+.ld-center{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:6px;
+}
+.ld-om{font-size:42px;animation:glow 1.5s ease-in-out infinite alternate;}
+.ld-pct{
+  width:120px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;
+}
+.ld-fill{
+  height:100%;width:0%;background:linear-gradient(90deg,var(--r1),var(--g1),var(--r1));
+  border-radius:2px;transition:width 0.05s linear;
+}
+.ld-txt{
+  margin-top:24px;font-family:'Cinzel',serif;font-size:11px;
+  letter-spacing:5px;color:var(--g1);opacity:0.7;
 }
 
-*{box-sizing:border-box}
+/* ─── CANVAS ─── */
+#c{position:fixed;inset:0;pointer-events:none;z-index:0;}
 
-html{scroll-behavior:smooth}
+/* ─── MAIN ─── */
+#app{opacity:0;transition:opacity 1.2s ease;position:relative;z-index:1;}
+#app.on{opacity:1;}
 
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
-/* layout */
-
-.wrapper{
-  max-width:980px;
-  margin:auto;
-  padding:22px 16px 60px;
-}
-
-/* hero */
-
+/* ─── HERO ─── */
 .hero{
-  border-radius:22px;
-  padding:34px 28px;
-  background:linear-gradient(120deg,var(--g1),var(--g2),var(--g3));
-  background-size:300% 300%;
-  animation:grad 14s ease infinite;
-  box-shadow:0 20px 60px rgba(0,0,0,.4);
-  position:relative;
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;position:relative;
+  padding:80px 20px 100px;overflow:hidden;
+}
+
+/* Radial glow bg */
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 50%, rgba(180,100,10,0.18) 0%, transparent 65%),
+    radial-gradient(circle at 15% 85%, rgba(139,26,26,0.25) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(212,175,55,0.15) 0%, transparent 45%),
+    radial-gradient(circle at 50% 0%, rgba(139,26,26,0.2) 0%, transparent 50%);
+  pointer-events:none;
+}
+
+/* Mandala SVG background */
+.mandala-bg{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(700px,120vw);height:min(700px,120vw);opacity:0.06;
+  animation:spin 60s linear infinite;pointer-events:none;
+}
+
+/* Border frame */
+.frame{position:absolute;inset:16px;pointer-events:none;}
+.frame-line{
+  position:absolute;background:linear-gradient(var(--dir,90deg),transparent,var(--g1),transparent);
+  opacity:0.35;
+}
+.frame-line.top{top:0;left:10%;width:80%;height:1px;}
+.frame-line.bot{bottom:0;left:10%;width:80%;height:1px;}
+.frame-line.lft{left:0;top:10%;width:1px;height:80%;--dir:180deg;}
+.frame-line.rgt{right:0;top:10%;width:1px;height:80%;--dir:180deg;}
+
+/* Corner gems */
+.gem{position:absolute;width:14px;height:14px;}
+.gem::before,.gem::after{
+  content:'';position:absolute;inset:0;
+  border:1px solid var(--g1);border-radius:2px;
+}
+.gem::after{transform:rotate(45deg);opacity:0.6;}
+.gem.tl{top:0;left:0;} .gem.tr{top:0;right:0;}
+.gem.bl{bottom:0;left:0;} .gem.br{bottom:0;right:0;}
+
+/* Avatar */
+.avatar-wrap{
+  position:relative;width:170px;height:170px;margin-bottom:32px;
+  opacity:0;animation:popUp 1s cubic-bezier(.34,1.56,.64,1) 0.4s forwards;
+}
+.av-outer{
+  position:absolute;inset:-14px;border-radius:50%;
+  background:conic-gradient(var(--g1) 0%,var(--r1) 25%,var(--g1) 50%,var(--r1) 75%,var(--g1) 100%);
+  animation:spin 8s linear infinite;filter:blur(0px);
+  mask:radial-gradient(circle,transparent 60%,black 62%);
+  -webkit-mask:radial-gradient(circle,transparent 60%,black 62%);
+}
+.av-ring{
+  position:absolute;inset:-7px;border-radius:50%;
+  border:1.5px solid rgba(212,175,55,0.5);
+  animation:spin 12s linear infinite reverse;
+}
+.av-ring::before{
+  content:'';position:absolute;
+  top:50%;left:-4px;transform:translateY(-50%);
+  width:7px;height:7px;background:var(--g1);border-radius:50%;
+  box-shadow:0 0 10px var(--g1);
+}
+.av-ring::after{
+  content:'';position:absolute;
+  top:-4px;left:50%;transform:translateX(-50%);
+  width:7px;height:7px;background:var(--r1);border-radius:50%;
+  box-shadow:0 0 10px var(--r1);
+}
+.av-inner{
+  position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#3a1505,#0e0402);
+  border:2px solid rgba(212,175,55,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel Decorative',serif;font-size:58px;
+  color:var(--g1);text-shadow:0 0 40px rgba(212,175,55,0.7);
+  overflow:hidden;
+}
+.av-inner::after{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:conic-gradient(transparent 0%,rgba(212,175,55,0.05) 10%,transparent 20%);
+  animation:spin 6s linear infinite;
+}
+
+/* Blessing */
+.bless{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(14px,2.5vw,18px);color:var(--g3);
+  letter-spacing:2px;margin-bottom:16px;
+  opacity:0;animation:fadeUp 1s ease 0.7s forwards;
+}
+.divider-row{
+  display:flex;align-items:center;gap:10px;margin:12px 0;
+  opacity:0;animation:fadeUp 1s ease 0.9s forwards;
+}
+.dline{height:1px;width:80px;background:linear-gradient(90deg,transparent,var(--g1));}
+.dline.r{background:linear-gradient(90deg,var(--g1),transparent);}
+.dsym{color:var(--g1);font-size:18px;}
+
+/* Name */
+.hero-name{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(36px,8vw,90px);font-weight:700;
+  text-align:center;line-height:1;
+  background:linear-gradient(135deg,var(--g2) 0%,var(--g1) 30%,var(--g4) 50%,var(--g1) 70%,var(--g3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200% auto;
+  filter:drop-shadow(0 0 30px rgba(212,175,55,0.4));
+  opacity:0;animation:nameReveal 1.4s cubic-bezier(.22,1,.36,1) 1s forwards,
+            goldShine 4s linear 2.4s infinite;
+}
+.hero-sub{
+  font-family:'Cinzel',serif;font-size:clamp(13px,2vw,16px);
+  color:var(--txt3);letter-spacing:8px;text-transform:uppercase;
+  margin-top:10px;opacity:0;animation:fadeUp 1s ease 1.4s forwards;
+}
+.tag{
+  margin-top:28px;padding:12px 36px;
+  border:1px solid rgba(212,175,55,0.35);border-radius:50px;
+  font-family:'Cinzel',serif;font-size:11px;color:var(--g1);
+  letter-spacing:3px;text-transform:uppercase;
+  background:rgba(212,175,55,0.05);backdrop-filter:blur(4px);
+  opacity:0;animation:fadeUp 1s ease 1.6s forwards;
+  position:relative;overflow:hidden;
+}
+.tag::after{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.2),transparent);
+  animation:sweep 3s ease-in-out 2.5s infinite;
+}
+
+/* Scroll cue */
+.scroll-cue{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fadeIn 1s ease 2.2s forwards;
+}
+.scroll-cue span{font-size:9px;letter-spacing:4px;color:rgba(212,175,55,0.5);font-family:'Cinzel',serif;}
+.chevrons{display:flex;flex-direction:column;align-items:center;gap:-4px;}
+.chev{
+  width:16px;height:8px;border-right:1px solid var(--g1);
+  border-bottom:1px solid var(--g1);transform:rotate(45deg);
+  opacity:0;
+}
+.chev:nth-child(1){animation:chevAnim 1.5s ease-in-out 2.5s infinite;}
+.chev:nth-child(2){animation:chevAnim 1.5s ease-in-out 2.7s infinite;}
+.chev:nth-child(3){animation:chevAnim 1.5s ease-in-out 2.9s infinite;}
+
+/* ─── CONTENT ─── */
+.content{max-width:860px;margin:0 auto;padding:0 20px 100px;}
+
+/* ─── SECTION ─── */
+.sec{
+  margin-bottom:36px;
+  opacity:0;transform:translateY(60px);
+  transition:opacity 0.9s ease,transform 0.9s ease;
+}
+.sec.in{opacity:1;transform:translateY(0);}
+
+.sec-head{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 26px;border-radius:14px 14px 0 0;
+  background:linear-gradient(135deg,var(--r1),var(--r3) 60%,#3a0808);
+  border:1px solid rgba(212,175,55,0.2);border-bottom:none;
+  position:relative;overflow:hidden;
+}
+.sec-head::before{
+  content:'';position:absolute;top:-1px;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--g1),transparent);
+}
+.sec-head::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.05) 0%,transparent 60%);
+}
+.sec-ico{font-size:26px;position:relative;z-index:1;filter:drop-shadow(0 0 8px rgba(212,175,55,0.5));}
+.sec-lbl{
+  font-family:'Cinzel',serif;font-size:13px;font-weight:600;
+  color:var(--g1);letter-spacing:3px;text-transform:uppercase;
+  position:relative;z-index:1;
+}
+.sec-bar{flex:1;height:1px;background:linear-gradient(90deg,rgba(212,175,55,0.5),transparent);position:relative;z-index:1;}
+
+.sec-body{
+  background:linear-gradient(160deg,#1a0804,#0e0402 60%,#160603);
+  border:1px solid rgba(212,175,55,0.15);border-top:none;
+  border-radius:0 0 14px 14px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6),inset 0 1px 0 rgba(212,175,55,0.05);
   overflow:hidden;
 }
 
-@keyframes grad{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
-.header{
-  display:flex;
-  gap:24px;
-  align-items:center;
+/* ─── ROWS ─── */
+.row{
+  display:grid;grid-template-columns:200px 1fr;
+  border-bottom:1px solid rgba(212,175,55,0.06);
+  transition:background 0.3s;
   position:relative;
-  z-index:1;
+}
+.row::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:transparent;transition:background 0.3s;
+}
+.row:hover{background:rgba(212,175,55,0.04);}
+.row:hover::after{background:linear-gradient(180deg,var(--r1),var(--g1));}
+.row:last-child{border-bottom:none;}
+
+.lbl{
+  padding:17px 20px 17px 26px;
+  font-size:10px;font-weight:700;letter-spacing:2.5px;
+  color:var(--txt4);text-transform:uppercase;
+  border-right:1px solid rgba(212,175,55,0.08);
+  display:flex;align-items:center;gap:10px;
+  background:rgba(0,0,0,0.15);
+}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--r1);flex-shrink:0;
+  box-shadow:0 0 8px rgba(139,26,26,0.7);}
+.val{
+  padding:17px 24px;
+  font-family:'Cormorant Garamond',serif;font-size:20px;
+  color:var(--txt2);letter-spacing:0.5px;
+  display:flex;align-items:center;gap:10px;
 }
 
-.avatar{
-  width:140px;
-  height:140px;
-  border-radius:20px;
-  object-fit:cover;
-  border:3px solid rgba(255,255,255,.6);
-  box-shadow:0 10px 35px rgba(0,0,0,.4);
-  animation:float 6s ease-in-out infinite;
+/* Name row special */
+.row.star .val{
+  font-size:28px;font-weight:600;
+  background:linear-gradient(135deg,var(--g2),var(--g1),var(--g4));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 10px rgba(212,175,55,0.3));
+}
+.row.star::after{background:linear-gradient(180deg,var(--g1),var(--g3))!important;}
+
+/* ─── CONTACT ─── */
+.phone-badge{
+  display:flex;align-items:center;gap:14px;
+}
+.ph-ring{
+  width:44px;height:44px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,var(--r2),var(--r3));
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  box-shadow:0 0 0 0 rgba(192,57,43,0.5);
+  animation:phoneRing 2s ease-in-out infinite;
+  flex-shrink:0;
+}
+.ph-num{
+  font-family:'Cormorant Garamond',serif;font-size:24px;
+  background:linear-gradient(135deg,var(--g2),var(--g1));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 
+/* ─── FOOTER ─── */
+.foot{
+  text-align:center;padding:50px 20px 80px;
+  opacity:0;transform:translateY(40px);
+  transition:opacity 1s ease,transform 1s ease;
+}
+.foot.in{opacity:1;transform:translateY(0);}
+.foot-orn{
+  font-size:28px;color:var(--g1);letter-spacing:16px;
+  margin-bottom:20px;display:block;
+  animation:glow 3s ease-in-out infinite;
+}
+.foot-line{
+  width:240px;height:1px;margin:0 auto 20px;
+  background:linear-gradient(90deg,transparent,var(--g3),transparent);
+}
+.foot-quote{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(16px,3vw,20px);color:var(--txt4);
+  line-height:1.8;letter-spacing:0.5px;margin-bottom:16px;
+}
+.foot-deity{
+  font-family:'Cinzel',serif;font-size:11px;
+  color:rgba(160,128,48,0.5);letter-spacing:4px;
+}
+
+/* ─── KEYFRAMES ─── */
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes glow{
+  0%,100%{filter:drop-shadow(0 0 8px rgba(212,175,55,0.4));}
+  50%{filter:drop-shadow(0 0 25px rgba(212,175,55,0.9));}
+}
+@keyframes popUp{
+  from{opacity:0;transform:scale(0.4) rotate(-10deg);}
+  to{opacity:1;transform:scale(1) rotate(0deg);}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes nameReveal{
+  from{opacity:0;transform:scale(0.7);letter-spacing:20px;}
+  to{opacity:1;transform:scale(1);letter-spacing:normal;}
+}
+@keyframes goldShine{
+  0%{background-position:0% center;}
+  100%{background-position:200% center;}
+}
+@keyframes sweep{0%{left:-100%;}100%{left:200%;}}
+@keyframes phoneRing{
+  0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,0.6);}
+  50%{box-shadow:0 0 0 12px rgba(192,57,43,0);}
+}
+@keyframes chevAnim{
+  0%{opacity:0;transform:translateY(-4px) rotate(45deg);}
+  50%{opacity:1;}
+  100%{opacity:0;transform:translateY(4px) rotate(45deg);}
+}
+@keyframes petalFall{
+  0%{transform:translateY(-30px) rotate(0deg) scale(1);opacity:0.8;}
+  80%{opacity:0.6;}
+  100%{transform:translateY(105vh) rotate(900deg) scale(0.5);opacity:0;}
+}
 @keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-12px);}
 }
 
-.hero h1{margin:0;font-size:30px}
-.sub{opacity:.95}
-
-/* top buttons */
-
-.topbar{
-  position:absolute;
-  right:18px;
-  top:18px;
-  display:flex;
-  gap:10px;
-  z-index:2;
-}
-
-.btn{
-  border:none;
-  border-radius:999px;
-  padding:8px 14px;
-  cursor:pointer;
-  font-size:13px;
-  background:rgba(255,255,255,.2);
-  color:white;
-  backdrop-filter:blur(8px);
-}
-
-/* cards */
-
-.section{
-  margin-top:22px;
-  padding:22px 24px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:18px;
-  backdrop-filter:blur(14px);
-  box-shadow:0 12px 35px rgba(0,0,0,.25);
-  opacity:0;
-  transform:translateY(18px);
-  transition:.6s cubic-bezier(.2,.7,.2,1);
-}
-
-.section.show{
-  opacity:1;
-  transform:none;
-}
-
-.section h2{
-  margin:0 0 14px;
-  font-size:18px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-/* grid */
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:10px 20px;
-}
-
-.small{color:var(--muted);font-size:13px}
-
-/* pills */
-
-.pill{
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  margin:6px 6px 0 0;
-  font-size:12px;
-  background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.04));
-}
-
-/* timeline */
-
-.timeline{
-  border-left:2px solid var(--border);
-  padding-left:18px;
-}
-
-.titem{
-  margin-bottom:14px;
-}
-
-.titem b{display:block}
-
-/* gallery */
-
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:10px;
-}
-
-.gallery img{
-  width:100%;
-  height:140px;
-  object-fit:cover;
-  border-radius:12px;
-  cursor:pointer;
-  transition:.3s;
-}
-
-.gallery img:hover{transform:scale(1.04)}
-
-/* modal */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:1000;
-}
-
-.modal img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:16px;
-}
-
-/* footer */
-
-.footer{
-  text-align:center;
-  margin-top:40px;
-  color:var(--muted);
-  font-size:13px;
-}
-
-/* responsive */
-
-@media(max-width:620px){
-  .header{flex-direction:column;text-align:center}
-  .topbar{right:10px;top:10px}
-}
-
-/* print */
-
-@media print{
-  .topbar,.gallery,.footer,.btn{display:none}
-  body{background:white;color:black}
-  .section{box-shadow:none}
+/* ─── RESPONSIVE ─── */
+@media(max-width:600px){
+  .row{grid-template-columns:1fr;}
+  .lbl{border-right:none;border-bottom:1px solid rgba(212,175,55,0.08);padding:12px 18px 8px 20px;}
+  .val{padding:8px 18px 16px 20px;font-size:18px;}
+  .row.star .val{font-size:22px;}
+  .ph-num{font-size:20px;}
+  .content{padding:0 12px 80px;}
+  .sec-head{padding:14px 18px;}
+  .sec-lbl{font-size:11px;}
 }
 </style>
 </head>
 <body>
 
-<div class="wrapper">
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-ring">
+    <!-- Outer ring -->
+    <svg class="r1" viewBox="0 0 180 180" fill="none">
+      <circle cx="90" cy="90" r="82" stroke="url(#lg1)" stroke-width="1.5" stroke-dasharray="8 6"/>
+      <circle cx="90" cy="8" r="4" fill="#D4AF37"/>
+      <circle cx="90" cy="172" r="4" fill="#8B1A1A"/>
+      <defs><linearGradient id="lg1" x1="0" y1="0" x2="180" y2="180"><stop stop-color="#D4AF37"/><stop offset="1" stop-color="#8B1A1A"/></linearGradient></defs>
+    </svg>
+    <!-- Middle ring -->
+    <svg class="r2" viewBox="0 0 180 180" fill="none">
+      <circle cx="90" cy="90" r="68" stroke="rgba(212,175,55,0.4)" stroke-width="1" stroke-dasharray="4 8"/>
+      <polygon points="90,22 96,34 84,34" fill="#D4AF37" opacity="0.7"/>
+      <polygon points="90,158 96,146 84,146" fill="#8B1A1A" opacity="0.7"/>
+    </svg>
+    <!-- Inner ring -->
+    <svg class="r3" viewBox="0 0 180 180" fill="none">
+      <circle cx="90" cy="90" r="52" stroke="rgba(139,26,26,0.5)" stroke-width="1" stroke-dasharray="3 5"/>
+    </svg>
+    <div class="ld-center">
+      <div class="ld-om">🪷</div>
+      <div class="ld-pct"><div class="ld-fill" id="ldFill"></div></div>
+    </div>
+  </div>
+  <div class="ld-txt">PREPARING YOUR BIODATA</div>
+</div>
 
-  <div class="hero">
+<!-- CANVAS -->
+<canvas id="c"></canvas>
 
-    <div class="topbar">
-      <button class="btn" onclick="toggleTheme()">Theme</button>
-      <button class="btn" onclick="window.print()">PDF</button>
+<!-- APP -->
+<div id="app">
+
+  <!-- HERO -->
+  <section class="hero">
+    <!-- Mandala bg -->
+    <svg class="mandala-bg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(250,250)">
+        <circle r="240" stroke="#D4AF37" stroke-width="0.5"/>
+        <circle r="200" stroke="#8B1A1A" stroke-width="0.5"/>
+        <circle r="160" stroke="#D4AF37" stroke-width="0.5"/>
+        <circle r="120" stroke="#8B1A1A" stroke-width="0.5"/>
+        <circle r="80"  stroke="#D4AF37" stroke-width="0.5"/>
+        <circle r="40"  stroke="#8B1A1A" stroke-width="0.5"/>
+        <!-- Petals layer 1 -->
+        <g stroke="#D4AF37" stroke-width="0.6" opacity="0.8">
+          <ellipse rx="20" ry="80" transform="rotate(0)"/>
+          <ellipse rx="20" ry="80" transform="rotate(30)"/>
+          <ellipse rx="20" ry="80" transform="rotate(60)"/>
+          <ellipse rx="20" ry="80" transform="rotate(90)"/>
+          <ellipse rx="20" ry="80" transform="rotate(120)"/>
+          <ellipse rx="20" ry="80" transform="rotate(150)"/>
+        </g>
+        <!-- Petals layer 2 -->
+        <g stroke="#8B1A1A" stroke-width="0.5" opacity="0.6">
+          <ellipse rx="14" ry="55" transform="rotate(15)"/>
+          <ellipse rx="14" ry="55" transform="rotate(45)"/>
+          <ellipse rx="14" ry="55" transform="rotate(75)"/>
+          <ellipse rx="14" ry="55" transform="rotate(105)"/>
+          <ellipse rx="14" ry="55" transform="rotate(135)"/>
+          <ellipse rx="14" ry="55" transform="rotate(165)"/>
+        </g>
+        <!-- Spokes -->
+        <g stroke="#D4AF37" stroke-width="0.4" opacity="0.5">
+          <line x1="0" y1="-240" x2="0" y2="240"/>
+          <line x1="-240" y1="0" x2="240" y2="0"/>
+          <line x1="-170" y1="-170" x2="170" y2="170"/>
+          <line x1="170" y1="-170" x2="-170" y2="170"/>
+          <line x1="-91" y1="-219" x2="91" y2="219"/>
+          <line x1="91" y1="-219" x2="-91" y2="219"/>
+          <line x1="-219" y1="-91" x2="219" y2="91"/>
+          <line x1="219" y1="-91" x2="-219" y2="91"/>
+        </g>
+        <!-- Dots on rings -->
+        <g fill="#D4AF37" opacity="0.7">
+          <circle r="3" transform="translate(0,-240)"/>
+          <circle r="3" transform="translate(0,240)"/>
+          <circle r="3" transform="translate(-240,0)"/>
+          <circle r="3" transform="translate(240,0)"/>
+          <circle r="3" transform="translate(0,-200)"/>
+          <circle r="3" transform="translate(0,200)"/>
+          <circle r="3" transform="translate(-200,0)"/>
+          <circle r="3" transform="translate(200,0)"/>
+        </g>
+        <g fill="#8B1A1A" opacity="0.7">
+          <circle r="3" transform="translate(0,-160)"/>
+          <circle r="3" transform="translate(0,160)"/>
+          <circle r="3" transform="translate(-160,0)"/>
+          <circle r="3" transform="translate(160,0)"/>
+        </g>
+      </g>
+    </svg>
+
+    <!-- Border frame -->
+    <div class="frame">
+      <div class="frame-line top"></div>
+      <div class="frame-line bot"></div>
+      <div class="frame-line lft"></div>
+      <div class="frame-line rgt"></div>
+      <div class="gem tl"></div>
+      <div class="gem tr"></div>
+      <div class="gem bl"></div>
+      <div class="gem br"></div>
     </div>
 
-    <div class="header">
-      <img src="photo.jpg" class="avatar" alt="Goutham Lokesh">
-      <div>
-        <h1>Goutham Lokesh</h1>
-        <div class="sub">Senior Software Test Engineer</div>
-        <div class="sub">Mysore, India</div>
+    <!-- Avatar -->
+    <div class="avatar-wrap" style="animation:popUp 1s cubic-bezier(.34,1.56,.64,1) 0.4s forwards,float 4s ease-in-out 2s infinite;">
+      <div class="av-outer"></div>
+      <div class="av-ring"></div>
+      <div class="av-inner">G</div>
+    </div>
+
+    <p class="bless">॥ ಶ್ರೀ ನಂಜುಂಡೇಶ್ವರ ಪ್ರಸನ್ನ ॥</p>
+
+    <div class="divider-row">
+      <div class="dline"></div>
+      <span class="dsym">✦</span><span class="dsym" style="color:var(--r1)">✦</span><span class="dsym">✦</span>
+      <div class="dline r"></div>
+    </div>
+
+    <h1 class="hero-name">Goutham L</h1>
+    <p class="hero-sub">Marriage Biodata</p>
+    <div class="tag">✦ &nbsp; Vokkaliga Gangatkar Gowda &nbsp; ✦</div>
+
+    <div class="scroll-cue">
+      <span>EXPLORE</span>
+      <div class="chevrons">
+        <div class="chev"></div>
+        <div class="chev"></div>
+        <div class="chev"></div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Basic -->
+  <!-- CONTENT -->
+  <div class="content">
 
-  <div class="section">
-    <h2>👤 Basic Information</h2>
-    <div class="grid">
-      <div><span class="small">Age</span><br>29</div>
-      <div><span class="small">Height</span><br>5.9</div>
-      <div><span class="small">Marital Status</span><br>Never Married</div>
-      <div><span class="small">Location</span><br>Mysore</div>
-    </div>
-  </div>
-
-  <!-- Professional -->
-
-  <div class="section">
-    <h2>💼 Professional Profile</h2>
-    <div class="grid">
-      <div><span class="small">Company</span><br>Unilog</div>
-      <div><span class="small">Experience</span><br>5+ years</div>
-      <div><span class="small">Role</span><br>Senior Software Test Engineer</div>
-      <div><span class="small">Specialization</span><br>Manual, Automation & API Testing</div>
-    </div>
-
-    <div>
-      <span class="pill">Automation</span>
-      <span class="pill">API Testing</span>
-      <span class="pill">Manual QA</span>
-      <span class="pill">Agile</span>
-      <span class="pill">Test Planning</span>
-    </div>
-  </div>
-
-  <!-- Career timeline -->
-
-  <div class="section">
-    <h2>🕘 Career Timeline</h2>
-
-    <div class="timeline">
-      <div class="titem">
-        <b>Senior Software Test Engineer – Unilog</b>
-        <span class="small">Current</span>
+    <!-- Personal -->
+    <div class="sec" data-d="0">
+      <div class="sec-head">
+        <span class="sec-ico">🌸</span>
+        <span class="sec-lbl">Personal Details</span>
+        <div class="sec-bar"></div>
       </div>
-
-      <div class="titem">
-        <b>Software Test Engineer</b>
-        <span class="small">Previous role</span>
+      <div class="sec-body">
+        <div class="row star">
+          <div class="lbl"><div class="dot"></div>Full Name</div>
+          <div class="val">Goutham L</div>
+        </div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Date of Birth</div><div class="val">15 December, 1996</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Age</div><div class="val">28 Years</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Height</div><div class="val">5 ft 9 in</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Birth Time</div><div class="val">8:15 AM</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Place of Birth</div><div class="val">📍 Mysore, Karnataka</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Religion</div><div class="val">Hindu</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Caste</div><div class="val">Vokkaliga Gangatkar Gowda</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Mother Tongue</div><div class="val">Kannada</div></div>
       </div>
     </div>
-  </div>
 
-  <!-- About -->
-
-  <div class="section">
-    <h2>✨ About Me</h2>
-    I am a responsible and family-oriented professional working as a Senior Software Test Engineer at Unilog.
-    I value honesty, mutual respect and continuous learning. I maintain a healthy balance between professional
-    responsibilities and personal life.
-  </div>
-
-  <!-- Family -->
-
-  <div class="section">
-    <h2>👪 Family Background</h2>
-    I come from a well-educated and supportive family. More details can be shared personally.
-  </div>
-
-  <!-- Partner -->
-
-  <div class="section">
-    <h2>❤️ Partner Preference</h2>
-    Looking for a kind, understanding and supportive partner with good family values and a positive outlook towards life.
-  </div>
-
-  <!-- Gallery -->
-
-  <div class="section">
-    <h2>🖼 Photo Gallery</h2>
-    <div class="gallery">
-      <img src="photo.jpg" onclick="openImg(this.src)">
-      <!-- you can add more photos later -->
-      <!-- <img src="p1.jpg" onclick="openImg(this.src)"> -->
-      <!-- <img src="p2.jpg" onclick="openImg(this.src)"> -->
+    <!-- Astrology -->
+    <div class="sec" data-d="80">
+      <div class="sec-head">
+        <span class="sec-ico">🌙</span>
+        <span class="sec-lbl">Astrological Details</span>
+        <div class="sec-bar"></div>
+      </div>
+      <div class="sec-body">
+        <div class="row"><div class="lbl"><div class="dot"></div>Zodiac / Rashi</div><div class="val">♑ Capricorn (Makara)</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Nakshatra / Star</div><div class="val">★ Dhanishtha</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Family Deity</div><div class="val">🙏 Nanjundeshwara &amp; Parvati Devi</div></div>
+      </div>
     </div>
+
+    <!-- Career -->
+    <div class="sec" data-d="120">
+      <div class="sec-head">
+        <span class="sec-ico">💼</span>
+        <span class="sec-lbl">Education &amp; Career</span>
+        <div class="sec-bar"></div>
+      </div>
+      <div class="sec-body">
+        <div class="row"><div class="lbl"><div class="dot"></div>Qualification</div><div class="val">BE – Electronics &amp; Communication (ECE)</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Designation</div><div class="val">Software Test Lead Engineer</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Employer</div><div class="val">Unilog Content Solutions</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Work Location</div><div class="val">📍 Mysore, Karnataka</div></div>
+      </div>
+    </div>
+
+    <!-- Family -->
+    <div class="sec" data-d="160">
+      <div class="sec-head">
+        <span class="sec-ico">🏡</span>
+        <span class="sec-lbl">Family Details</span>
+        <div class="sec-bar"></div>
+      </div>
+      <div class="sec-body">
+        <div class="row"><div class="lbl"><div class="dot"></div>Father's Name</div><div class="val">Lokesh N</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Mother's Name</div><div class="val">Shashikala S</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Siblings</div><div class="val">One Younger Brother</div></div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Native Place</div><div class="val">📍 Mysore, Karnataka</div></div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="sec" data-d="200">
+      <div class="sec-head">
+        <span class="sec-ico">📞</span>
+        <span class="sec-lbl">Contact Details</span>
+        <div class="sec-bar"></div>
+      </div>
+      <div class="sec-body">
+        <div class="row">
+          <div class="lbl"><div class="dot"></div>Mobile</div>
+          <div class="val">
+            <div class="phone-badge">
+              <div class="ph-ring">📱</div>
+              <span class="ph-num">+91 72592 99288</span>
+            </div>
+          </div>
+        </div>
+        <div class="row"><div class="lbl"><div class="dot"></div>Location</div><div class="val">📍 Mysore, Karnataka, India</div></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="foot">
+      <span class="foot-orn">✦ ✦ ✦</span>
+      <div class="foot-line"></div>
+      <p class="foot-quote">"May this sacred union be blessed with<br>love, prosperity &amp; eternal happiness"</p>
+      <div class="foot-line"></div>
+      <p class="foot-deity">॥ ಶ್ರೀ ನಂಜುಂಡೇಶ್ವರ ಪ್ರಸನ್ನ ॥</p>
+    </div>
+
   </div>
+</div>
 
-  <!-- Contact -->
+<script>
+/* ── LOADER ── */
+const fill=document.getElementById('ldFill');
+let pct=0;
+const ticker=setInterval(()=>{
+  pct+=Math.random()*3+1;
+  if(pct>=100){pct=100;clearInterval(ticker);}
+  fill.style.width=pct+'%';
+},40);
+setTimeout(()=>{
+  document.getElementById('loader').classList.add('out');
+  document.getElementById('app').classList.add('on');
+  launchCanvas();
+  launchPetals();
+  observe();
+},2600);
 
-  <div class="section">
-    <h2>📩 Contact</h2>
-    Contact details can be shared personally after mutual interest.
-  </div>
+/* ── CANVAS PARTICLES ── */
+function launchCanvas(){
+  const cv=document.getElementById('c');
+  const cx=cv.getContext('2d');
+  let W,H;
+  const resize=()=>{W=cv.width=innerWidth;H=cv.height=innerHeight;};
+  resize();addEventListener('resize',resize);
 
-  <div class="footer">
+  /* Gold dust particles */
+  const pts=[];
+  for(let i=0;i<120;i++) pts.push(mkPt());
+  function mkPt(init){
+    return{
+      x:Math.random()*W, y:init?Math.random()*H:H+10,
+      r:Math.random()*1.8+0.3,
+      sp:Math.random()*0.5+0.1,
+      dr:(Math.random()-0.5)*0.4,
+      op:Math.random()*0.6+0.1,
+      tw:Math.random()*Math.PI*2,
+      gold:Math.random()>0.35,
+    };
+  }
+
+  /* Star bursts */
+  const stars=[];
+  function mkStar(){
+    stars.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:0,maxR:Math.random()*30+10,
+      op:0.8,spd:Math.random()*0.5+0.3,
+      col:Math.random()>0.5?[212,175,55]:[139,26,26],
+    });
+  }
+  setInterval(mkStar,2000);
+
+  /* Orbiting rings */
+  const rings=[
+    {x:0.15,y:0.25,r:80,a:0,sp:0.002},
+    {x:0.85,y:0.7,r:60,a:Math.PI,sp:-0.003},
+    {x:0.5,y:0.5,r:120,a:0,sp:0.0015},
+  ];
+
+  function loop(){
+    cx.clearRect(0,0,W,H);
+
+    /* Rings */
+    rings.forEach(rg=>{
+      rg.a+=rg.sp;
+      const rx=rg.x*W,ry=rg.y*H;
+      cx.beginPath();
+      cx.arc(rx,ry,rg.r,0,Math.PI*2);
+      cx.strokeStyle='rgba(212,175,55,0.04)';
+      cx.lineWidth=1;
+      cx.stroke();
+      /* Orbiting dot */
+      const dx=rx+Math.cos(rg.a)*rg.r;
+      const dy=ry+Math.sin(rg.a)*rg.r;
+      cx.beginPath();cx.arc(dx,dy,2.5,0,Math.PI*2);
+      cx.fillStyle='rgba(212,175,55,0.5)';cx.fill();
+    });
+
+    /* Particles */
+    pts.forEach((p,i)=>{
+      p.y-=p.sp;p.x+=p.dr;p.tw+=0.04;
+      if(p.y<-10){Object.assign(pts[i],mkPt());}
+      const a=p.op*(0.5+0.5*Math.sin(p.tw));
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      cx.fillStyle=p.gold?`rgba(212,175,55,${a})`:`rgba(139,26,26,${a})`;
+      cx.fill();
+    });
+
+    /* Star bursts */
+    for(let i=stars.length-1;i>=0;i--){
+      const s=stars[i];s.r+=s.spd;s.op-=0.012;
+      if(s.op<=0){stars.splice(i,1);continue;}
+      cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      cx.strokeStyle=`rgba(${s.col.join(',')},${s.op*0.4})`;
+      cx.lineWidth=1;cx.stroke();
+      /* 6-point sparkle */
+      for(let k=0;k<6;k++){
+        const ang=k*Math.PI/3;
+        const len=s.r*1.4;
+        cx.beginPath();
+        cx.moveTo(s.x,s.y);
+        cx.lineTo(s.x+Math.cos(ang)*len,s.y+Math.sin(ang)*len);
+        cx.strokeStyle=`rgba(${s.col.join(',')},${s.op*0.2})`;
+        cx.stroke();
+      }
+    }
+
+    requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+/* ── PETALS ── */
+function launchPetals(){
+  const set=['🌸','🌺','🌼','✿','🪷'];
+  function drop(){
+    const el=document.createElement('div');
+    const sz=Math.random()*12+10;
+    el.textContent=set[Math.floor(Math.random()*set.length)];
+    el.style.cssText=`
+      position:fixed;top:-30px;z-index:2;pointer-events:none;
+      font-size:${sz}px;
+      left:${Math.random()*100}vw;
+      opacity:0;
+      animation:petalFall ${Math.random()*7+8}s linear forwards;
+    `;
+    document.body.appendChild(el);
+    el.style.opacity='0.8';
+    setTimeout(()=>el.remove(),16000);
+  }
+  setInterval(drop,1800);
+  /* Initial burst */
+  for(let i=0;i<6;i++) setTimeout(drop,i*300);
+}
+
+/* ── SCROLL REVEAL ── */
+function observe(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const d=parseInt(e.target.dataset.d||0);
+        setTimeout(()=>e.target.classList.add('in'),d);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.sec,.foot').forEach(el=>io.observe(el));
+}
+
+/* ── PARALLAX HERO ── */
+const hero=document.querySelector('.hero');
+const nm=document.querySelector('.hero-name');
+const av=document.querySelector('.avatar-wrap');
+hero.addEventListener('mousemove',e=>{
+  const dx=(e.clientX-innerWidth/2)/innerWidth;
+  const dy=(e.clientY-innerHeight/2)/innerHeight;
+  if(nm)nm.style.transform=`translate(${dx*10}px,${dy*6}px)`;
+  if(av)av.style.transform=`translate(${dx*6}px,${dy*4}px)`;
+});
+hero.addEventListener('mouseleave',()=>{
+  if(nm)nm.style.transform='';
+  if(av)av.style.transform='';
+});
+
+/* ── CURSOR SPARKLE ── */
+document.addEventListener('click',e=>{
+  for(let i=0;i<8;i++){
+    const sp=document.createElement('div');
+    const a=Math.random()*Math.PI*2;
+    const d=Math.random()*60+20;
+    const sz=Math.random()*6+3;
+    sp.style.cssText=`
+      position:fixed;z-index:9998;pointer-events:none;
+      width:${sz}px;height:${sz}px;border-radius:50%;
+      background:${Math.random()>0.5?'#D4AF37':'#8B1A1A'};
+      left:${e.clientX-sz/2}px;top:${e.clientY-sz/2}px;
+      box-shadow:0 0 ${sz*2}px currentColor;
+      transition:all 0.6s ease;
+    `;
+    document.body.appendChild(sp);
+    requestAnimationFrame(()=>{
+      sp.style.transform=`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(0)`;
+      sp.style.opacity='0';
+    });
+    setTimeout(()=>sp.remove(),700);
+  }
+});
+</script>
+</body>
+</html>
